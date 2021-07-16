@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/estilo.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <title>CRUD js</title>
+</head>
+<body onload="loadListUsers()">
+    <header>
+        <nav class="navbar navbar-dark bg-dark">
+            <a href="#" class="navbar-brand ml-5">
+                <i class="fas fa-headphones fa-2x"><h1>Call Center</h1></i>
+            </a>
+        </nav>
+    </header>
+    <div class="container layout-container ">
+        <form>
+            <h2 class="mb-2">Cadastro</h2>
+            <div class="form-row">
+                <div class="col-md-5">
+                    <input type="text" class="form-control" placeholder="Nome" id="nome">
+                </div>
+                <div class="col-md-5">
+                    <input type="text" class="form-control" placeholder="Sobrenome" id="sobrenome">
+                </div>
+            </div>
+            <div class="form-row mt-4">
+                <div class="col-md-2">
+                    <input type="number" class="form-control" placeholder="Idade" id="idade">
+                </div>
+                <div class="col-md-3">
+                    <input type="email" class="form-control" placeholder="E-mail" id="email">
+                </div>
+                <div class="col-md-3">
+                    <select class="custom-select" id="estado">
+                        <option value="" selected>-- Estado --</option>
+                        <option value="1">GO</option>
+                        <option value="2">SP</option>
+                        <option value="3">MT</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <input type="number" class="form-control" placeholder="ramal" id="ramal">
+                </div>
+            </div>
+            <div class="form-row mt-3 ml-2">
+                <button class="btn btn-primary" onclick="createObject()" id="create">Criar</button>
+            </div>
+
+        </form>
+        <hr>
+        <h2 class="mb-3">Pesquisa</h2>
+        <div class="w-50 ">   
+            <form class="form-row">
+                <div class="col-md-7">
+                    <input type="search"class="form-control" placeholder="Search..." id="searchUser">
+                </div>
+                <div class="col-md-3">
+                    <button class="btn btn-success" onclick="search()"><i class="fas fa-search"></i></button>
+                </div>
+            </form>
+        </div>
+
+        <div class="mt-4">
+            <table class="table">
+                <thead class="thead-dark ">
+                  <tr >
+                    <th scope="col">Nome</th>
+                    <th scope="col">E-mail</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col" >Ramal</th>
+                    <th scope="col">Options</th>
+                  </tr>
+                </thead>
+                <tbody id="loadListUsers">
+                </tbody>
+              </table>
+        </div>
+    </div>
+
+    <!-- Modal User -->
+    <div class="modal" tabindex="-1" role="dialog" id="createUser">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 id="modal-title"></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" id="modal-body">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal" id="modal-footer"><i class="fas fa-times"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--Modal Update-->
+
+    <div class="modal" tabindex="-1" role="dialog" id="updateUser">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5></h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="regulateId()">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <form>
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" placeholder="Nome" id="nomeUpdate">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" placeholder="Sobrenome" id="sobrenomeUpdate">
+                        </div>
+                    </div>
+                    <div class="form-row mt-4">
+                        <div class="col-md-3">
+                            <input type="number" class="form-control" placeholder="Idade" id="idadeUpdate">
+                        </div>
+                        <div class="col-md-7">
+                            <input type="email" class="form-control" placeholder="E-mail" id="emailUpdate">
+                        </div>
+                    </div>
+                    <div class="form-row mt-4 ">
+                        <div class="col-md-3">
+                            <select class="custom-select" id="estadoUpdate">
+                                <option value="" selected>-- Estado --</option>
+                                <option value="1">GO</option>
+                                <option value="2">SP</option>
+                                <option value="3">MT</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="number" class="form-control" placeholder="ramal" id="ramalUpdate">
+                        </div>
+                        <div class="col-3">
+                            <button class="btn btn-primary" id="save" onclick="saveUpdate()">Salvar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+  
+<script src="../js/script.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>
